@@ -15,8 +15,5 @@ public interface userTypeService {
 
      //obtiene todos los tipos de clientes del comercio
      public List<userType> obtenerTiposUsuarios();
-     
-     //transforma una cadena de caracteres a su id correspondiente
-     public int idTipoCliente(String tipoCliente);
 
 }

@@ -20,7 +20,7 @@ public interface usersService {
      * @param id Id del usuario a modificar
      * @return boolean, True Exito, False fracaso
      */
-    public boolean modificarCliente(int id);
+    public boolean modificarCliente(int id, users users);
 
     /*
      * Busca un cliente en la base de datos por medio del correo

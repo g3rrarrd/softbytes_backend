@@ -2,7 +2,6 @@ package hn.softbytes.softbytes_backend.Services;
 
 import hn.softbytes.softbytes_backend.Models.orderStatus;
 import hn.softbytes.softbytes_backend.Models.orders;
-import hn.softbytes.softbytes_backend.Models.paymentMethod;
 
 public interface ordersService {
     
@@ -26,12 +25,5 @@ public interface ordersService {
      * @return orderStatus
      */
     public orderStatus obtenerEstado(int id);
-
-    /*
-     * Obtendra el metodo de pago del pedido buscado por la id
-     * @param id idPedido
-     * @return paymentMethod
-     */
-    public paymentMethod obtenerMetodoPago(int id);
 
 }
