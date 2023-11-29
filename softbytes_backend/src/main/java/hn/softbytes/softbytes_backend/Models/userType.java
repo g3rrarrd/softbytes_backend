@@ -29,7 +29,7 @@ public class userType{
     private int idUserType;
 
     @Column(name = "tipousuario")
-    private int userType;
+    private String userType;
 
     @OneToMany(mappedBy = "usertype", cascade = CascadeType.ALL)
     private List<users> users; 

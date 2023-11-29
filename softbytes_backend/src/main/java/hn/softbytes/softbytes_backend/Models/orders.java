@@ -42,10 +42,6 @@ public class orders {
     @JoinColumn(name = "idestadopedido", referencedColumnName = "idestadopedido")
     private orderStatus idOrderStatus;
 
-    @ManyToOne
-    @JoinColumn(name = "idmetodopago", referencedColumnName = "idmetodopago")
-    private paymentMethod idPaymentMethod;
-
     @Column(name = "monto")
     private double amount;
 
