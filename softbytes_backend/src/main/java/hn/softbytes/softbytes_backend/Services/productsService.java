@@ -12,7 +12,7 @@ public interface productsService {
      * @param product:Json
      * @return boolean
      */
-    public boolean crearProducto(products products);
+    public boolean crearProducto(int id,products products, int idSubCategory, int idCategory);
 
     /*
      * Actualiza el precio de un producto

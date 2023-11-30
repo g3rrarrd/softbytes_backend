@@ -3,6 +3,8 @@ package hn.softbytes.softbytes_backend.Models;
 import java.time.LocalDate;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -48,6 +50,7 @@ public class orders {
     @OneToOne(mappedBy = "idOrder", cascade = CascadeType.ALL)
     private sales sales;
 
+    @JsonIgnore
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
         name = "orders_users",

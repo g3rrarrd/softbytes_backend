@@ -2,6 +2,8 @@ package hn.softbytes.softbytes_backend.Models;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -34,6 +36,7 @@ public class categories {
     @Column(name = "imagen")
     private String picture;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "categories", cascade = CascadeType.ALL)
     private List<subCategories> subCategories;
     

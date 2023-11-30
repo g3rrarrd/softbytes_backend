@@ -45,7 +45,7 @@ public class sales {
     private double subTotal;
 
     @Column(name = "ISV")
-    private Float isv;
+    private double isv;
 
     @Column(name = "total")
     private double total;

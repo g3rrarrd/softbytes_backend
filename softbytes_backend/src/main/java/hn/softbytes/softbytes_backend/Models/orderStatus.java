@@ -3,6 +3,8 @@ package hn.softbytes.softbytes_backend.Models;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -37,6 +39,7 @@ public class orderStatus {
     @Column(name = "descripcion")
     private String description;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "idOrderStatus", cascade = CascadeType.ALL)
     private List<orders> orders;
 }

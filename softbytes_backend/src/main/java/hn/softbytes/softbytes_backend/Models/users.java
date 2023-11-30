@@ -1,7 +1,13 @@
 package hn.softbytes.softbytes_backend.Models;
 
 import java.time.LocalDate;
+import java.util.Collection;
 import java.util.List;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.annotation.Generated;
 import jakarta.persistence.CascadeType;
@@ -15,6 +21,7 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -58,6 +65,9 @@ public class users{
     @Column(name = "preferenciaenvio")
     private String shippingPreference;
 
+    @Column(name = "username")
+    private String username;
+
     @ManyToOne
     @JoinColumn(name = "idtipousuario", referencedColumnName = "idtipousuario")
     private userType usertype;
@@ -65,6 +75,7 @@ public class users{
     @OneToMany(mappedBy = "idUsers", cascade = CascadeType.ALL)
     private List<address> addresses;
 
+    @JsonIgnore
     @ManyToMany(mappedBy = "idUsers", cascade = CascadeType.ALL)
     private List<orders> iOrders;
 }

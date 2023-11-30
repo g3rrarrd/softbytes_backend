@@ -8,5 +8,6 @@ public interface orderStatusService {
 
     public List<orderStatus> obtenerOrdenEstado();
 
+    public List<orderStatus> obtenerPorEstado(String estado);
     
 }

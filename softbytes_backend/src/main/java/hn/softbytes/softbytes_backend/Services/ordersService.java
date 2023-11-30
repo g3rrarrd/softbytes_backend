@@ -26,4 +26,6 @@ public interface ordersService {
      */
     public orderStatus obtenerEstado(int id);
 
+    public boolean eliminarPedido(int id);
+
 }

@@ -13,7 +13,7 @@ public interface usersService {
      * @param users valor tipo json con los atributos del cliente
      * @return boolean, True Exito, False fracaso
      */
-    public boolean crearCliente(users users);
+    public users crearCliente(users users);
 
     /*
      * Modifica un usuario existente
@@ -63,5 +63,7 @@ public interface usersService {
      * @return Lista de clientes que hayan nacido entre esos anios
      */
     public List<users> clientePorFecha(LocalDate fechaInicio, LocalDate fechaFinal);
+
+    public boolean isClientValidate(String email, String password);
 
 }

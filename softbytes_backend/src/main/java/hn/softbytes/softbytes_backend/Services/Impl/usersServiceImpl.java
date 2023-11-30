@@ -7,7 +7,12 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import hn.softbytes.softbytes_backend.Models.address;
 import hn.softbytes.softbytes_backend.Models.users;
+import hn.softbytes.softbytes_backend.Repositories.addressRepository;
+import hn.softbytes.softbytes_backend.Repositories.citiesRepository;
+import hn.softbytes.softbytes_backend.Repositories.countriesRepository;
+import hn.softbytes.softbytes_backend.Repositories.departmentsRepository;
 import hn.softbytes.softbytes_backend.Repositories.userTypeRepository;
 import hn.softbytes.softbytes_backend.Repositories.usersRepository;
 import hn.softbytes.softbytes_backend.Services.usersService;
@@ -20,32 +25,51 @@ public class usersServiceImpl implements usersService{
 
     @Autowired
     private userTypeRepository userTypeRepository;
+    @Autowired 
+    private addressRepository addressRepository;
+    @Autowired
+    private citiesRepository citiesRepository;
+    @Autowired 
+    private departmentsRepository departmentsRepository;
+    @Autowired
+    private countriesRepository countriesRepository;
 
     @Override
-    public boolean crearCliente(users users) {
+    public users crearCliente(users users) {
         
+        address address;
+
         if(isValidateUser(users)){
-            for (users user : this.usersRepository.findAll()) {
+           if(!this.usersRepository.findAll().isEmpty()){
+             for (users user : this.usersRepository.findAll()) {
                 if (user.getEmail().equals(users.getEmail())) {
-                    return false;
+                    return users;
                 }
             }
-            users.setUsertype(this.userTypeRepository.findById(0).get());
+           }
+
+            this.countriesRepository.save(users.getAddresses().get(0).getIdCity().getDepartments().getIdCountry());
+            this.departmentsRepository.save(users.getAddresses().get(0).getIdCity().getDepartments());
+            this.citiesRepository.save(users.getAddresses().get(0).getIdCity());
+            address = this.addressRepository.save(users.getAddresses().get(0));
+            users.getAddresses().get(users.getIdUser()).setIdUsers(users);;
+            users.setUsertype(this.userTypeRepository.findById(1).get());
+            users.setUsername(users.getEmail());
             this.usersRepository.save(users);
-            return true;
+            return this.usersRepository.findById(users.getIdUser()).get();
         }
 
-        return false;
+        return users;
     }
 
     private boolean isValidateUser(users users){
         if(users.getDateofBirth() != null 
-        && users.getEmail() != null 
-        && users.getName() != null 
-        && users.getLastName() != null 
-        && users.getAddresses() != null 
-        && users.getPassword() != null 
-        && users.getTelephone() != null){
+        && !users.getEmail().isEmpty() 
+        && !users.getName().isEmpty() 
+        && !users.getLastName().isEmpty()
+        && !users.getAddresses().isEmpty()
+        && !users.getPassword().isEmpty()
+        && !users.getTelephone().isEmpty()){
             return true;
         }
         return false;
@@ -56,6 +80,7 @@ public class usersServiceImpl implements usersService{
        
         users oldUser = new users();
 
+        oldUser = this.usersRepository.findById(id).get();
         oldUser.setAddresses(users.getAddresses() != null ? users.getAddresses() : oldUser.getAddresses());
         oldUser.setPassword(users.getPassword() != null ? users.getPassword() : oldUser.getPassword());
         oldUser.setShippingPreference(users.getShippingPreference() != null ? users.getShippingPreference() : oldUser.getShippingPreference());
@@ -104,14 +129,13 @@ public class usersServiceImpl implements usersService{
     @Override
     public users buscarCliente(int id) {
         
-        users user = new users();
+        users users = new users();
 
-        if(this.usersRepository.existsById(id)){
-            user = this.usersRepository.findById(id).get();
-            return user;
+        if(this.usersRepository.findById(id)!=null){
+            users = this.usersRepository.findById(id).get();
         }
 
-        return user;
+        return users;
     }
 
     @Override
@@ -153,6 +177,37 @@ public class usersServiceImpl implements usersService{
 
         return usersByDate;
 
+    }
+
+    @Override
+    public boolean isClientValidate(String email, String password) {
+        
+        for (users user : this.usersRepository.findAll()) {
+            if(user.getEmail().equals(email) && user.getPassword().equals(password)){
+                return true;
+            }
+        }
+
+        return false;
+
+    }
+
+    public boolean cambiarTipo(int id, int tipo) {
+        
+        users users = new users();
+
+        if(this.usersRepository.findById(id) != null){
+
+           if(this.userTypeRepository.findById(id) != null){
+             users = this.usersRepository.findById(id).get();
+             users.setUsertype(this.userTypeRepository.findById(tipo).get());
+             this.usersRepository.save(users);
+             return true;
+           }
+            
+        }
+
+        return false;
     }
     
 }

@@ -3,6 +3,8 @@ package hn.softbytes.softbytes_backend.Models;
 import java.time.LocalDate;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -57,6 +59,7 @@ public class products {
     @Column(name = "reseñas")
     private String reviews;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "products", cascade = CascadeType.ALL)
     private List<orderDetail> orderDetails;
 
