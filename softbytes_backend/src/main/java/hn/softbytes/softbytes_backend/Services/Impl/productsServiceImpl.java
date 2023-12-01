@@ -33,7 +33,7 @@ public class productsServiceImpl implements productsService{
             products.setPublicationDate(LocalDate.now());
             products.setIdSubCategories(this.subCategoriesRepository.findById(idSubCategory).get());
             products.getIdSubCategories().setCategories(this.categoriesRepository.findById(idCategory).get());
-            //this.productsRepository.save(products);
+            this.productsRepository.save(products);
             return true;
         }
         return false;
@@ -44,7 +44,8 @@ public class productsServiceImpl implements productsService{
         && !products.getPicture().equals(null)
         && !products.getSerialCode().equals(null)
         && !products.getDescription().equals(null)
-        && products.getUnityPrice() > 0)
+        && products.getUnityPrice() > 0
+        && id == 4)
         {
             return true;
         }
@@ -127,5 +128,18 @@ public class productsServiceImpl implements productsService{
 
         return productsList;
     }
-    
+
+    @Override
+    public boolean actualizarProdcutoReviews(int id, String review) {
+        products products = new products();
+            if(this.productsRepository.findById(id) != null){
+                products = this.productsRepository.findById(id).get();
+                products.setReviews(review);
+                this.productsRepository.save(products);
+                return true;
+            }
+        return false;
+    }
+
+
 }

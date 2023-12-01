@@ -19,8 +19,17 @@ import hn.softbytes.softbytes_backend.Services.Impl.productsServiceImpl;
 @RequestMapping("/auth/products/")
 public class productsController {
     
+    
     @Autowired
     productsServiceImpl productsServiceImpl;
+
+    @PostMapping("/crear")
+    public String crearProducto(@RequestParam(name = "id")int id,@RequestBody products products, @RequestParam(name = "idSubCategory")int idSubCategory, @RequestParam(name = "idCategory")int idCategory){
+        if(this.productsServiceImpl.crearProducto(id ,products, idSubCategory, idCategory)){
+            return "Producto Creado";
+        }
+        return "No ha podido crearse";
+    }
 
     @PutMapping("/actualizar")
     public String actualizarPrecio(@RequestParam(name = "id")int id, @RequestParam(name = "price")double price){
@@ -53,5 +62,10 @@ public class productsController {
     @GetMapping("/obtener/categoria")
     public List<products> obtenerProductosCategoria(@RequestParam(name = "Category")String Category){
         return this.productsServiceImpl.obtenerProductosCategoria(Category);
+    }
+
+    @PutMapping("/actualizar/review")
+    public boolean actualizarProductoReview(@RequestParam(name = "id")int id, @RequestParam(name = "review")String review){
+        return this.productsServiceImpl.actualizarProdcutoReviews(id, review);
     }
 }

@@ -1,11 +1,18 @@
 package hn.softbytes.softbytes_backend.Services.Impl;
 
+import java.time.LocalDate;
+import java.util.LinkedList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import hn.softbytes.softbytes_backend.Models.orderStatus;
 import hn.softbytes.softbytes_backend.Models.orders;
+import hn.softbytes.softbytes_backend.Models.users;
+import hn.softbytes.softbytes_backend.Repositories.orderStatusRepository;
 import hn.softbytes.softbytes_backend.Repositories.ordersRepository;
+import hn.softbytes.softbytes_backend.Repositories.usersRepository;
 import hn.softbytes.softbytes_backend.Services.ordersService;
 
 @Service
@@ -13,6 +20,12 @@ public class ordersServiceImpl implements ordersService{
 
     @Autowired
     private ordersRepository ordersRepository;
+
+    @Autowired
+    private usersRepository usersRepository;
+
+    @Autowired
+    private orderStatusRepository orderStatusRepository;
 
     @Override
     public orders obtenerPedido(int id) {
@@ -25,9 +38,16 @@ public class ordersServiceImpl implements ordersService{
     }
 
     @Override
-    public boolean crearPedido(orders orders) {
+    public boolean crearPedido(int idCliente, orders orders) {
+    
         
-        if(orders != null){
+        List<users> users = new LinkedList<users>();
+
+        if( this.usersRepository.findById(idCliente) != null){
+            orders.setOrderDate(LocalDate.now());
+            orders.setIdOrderStatus(this.orderStatusRepository.findById(1).get());
+            users.add(this.usersRepository.findById(idCliente).get());
+            orders.setIdUsers(users);
             this.ordersRepository.save(orders);
             return true;
         }
@@ -54,6 +74,16 @@ public class ordersServiceImpl implements ordersService{
         }
 
         return false;
+    }
+
+    @Override
+    public List<orders> obtenerPedidosCliente(int idCliente) {
+        
+        if(this.usersRepository.findById(idCliente) != null){
+            return this.usersRepository.findById(idCliente).get().getIOrders();
+        }
+
+        return null;
     }
 
     

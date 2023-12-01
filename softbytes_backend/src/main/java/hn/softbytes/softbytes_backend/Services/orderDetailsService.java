@@ -11,7 +11,7 @@ public interface orderDetailsService {
      * @param orderDetail orderDetail:Json
      * @return boolean
      */
-    public boolean crearOrderDetail(orderDetail orderDetail);
+    public boolean crearOrderDetail(int idPedido, orderDetail orderDetail, int idProducto);
 
     /*
      * obtendra los detalles de los pedidos de un pedido
@@ -27,5 +27,7 @@ public interface orderDetailsService {
      * @return boolean
      */
     public boolean actualizarCantidad(int id, int cantidad);
+
+    public boolean eliminarDetallePedido(int id);
 }
 

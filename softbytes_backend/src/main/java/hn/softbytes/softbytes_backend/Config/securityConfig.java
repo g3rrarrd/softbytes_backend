@@ -23,8 +23,9 @@ public class securityConfig {
                 .disable())
             .authorizeHttpRequests(authRequest ->
                 authRequest
-                .requestMatchers("/v1").authenticated()
+                .requestMatchers("/v1/**").authenticated()
                 .requestMatchers("/auth/**").permitAll()
+                .anyRequest().permitAll()
                 )
                 .formLogin(withDefaults())
                 .build();

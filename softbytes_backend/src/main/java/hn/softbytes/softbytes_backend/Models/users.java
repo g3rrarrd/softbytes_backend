@@ -1,6 +1,7 @@
 package hn.softbytes.softbytes_backend.Models;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -73,7 +74,7 @@ public class users{
     private userType usertype;
 
     @OneToMany(mappedBy = "idUsers", cascade = CascadeType.ALL)
-    private List<address> addresses;
+    private List<address> addresses = new ArrayList<address>();
 
     @JsonIgnore
     @ManyToMany(mappedBy = "idUsers", cascade = CascadeType.ALL)

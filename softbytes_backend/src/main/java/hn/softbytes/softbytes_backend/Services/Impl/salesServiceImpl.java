@@ -8,8 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import hn.softbytes.softbytes_backend.Models.orderDetail;
+import hn.softbytes.softbytes_backend.Models.orders;
 import hn.softbytes.softbytes_backend.Models.sales;
 import hn.softbytes.softbytes_backend.Repositories.orderDetailsRepository;
+import hn.softbytes.softbytes_backend.Repositories.orderStatusRepository;
 import hn.softbytes.softbytes_backend.Repositories.ordersRepository;
 import hn.softbytes.softbytes_backend.Repositories.salesRepository;
 import hn.softbytes.softbytes_backend.Services.salesService;
@@ -23,45 +25,42 @@ public class salesServiceImpl implements salesService{
     @Autowired
     private orderDetailsRepository orderDetailRepository;
 
+    @Autowired
+    private ordersRepository ordersRepository;
+
+    @Autowired
+    private orderStatusRepository orderStatusRepository;
+
     @Override
-    public boolean crearVenta(sales sales) {
+    public boolean crearVenta(int idPedido) {
         
-        double subTotal = 0;
+        sales sales = new sales();
+        orders orders = new orders();
 
-        if(isSalesValidate(sales)){
-            sales.setIsv(0.15);
-            
-            subTotal = calcularSubTotal(sales.getIdOrder().getIdOrders());
+        if(this.ordersRepository.findById(idPedido) != null){
+            orders = this.ordersRepository.findById(idPedido).get();
+            sales.setSubTotal(orders.getAmount());
+            if(isSalesValidate(sales)){
+                    
+                sales.setIsv(0.15);
+                sales.setTotal(sales.getSubTotal() + (sales.getSubTotal() * sales.getIsv()));
+                sales.setDate(LocalDate.now());
+                orders.setIdOrderStatus(this.orderStatusRepository.findById(3).get());
+                sales.setIdOrder(orders);
+    
+                this.salesRepository.save(sales);
 
-            sales.setSubTotal(subTotal);
-            sales.setTotal(subTotal + (subTotal * sales.getIsv()));
-            sales.setDate(LocalDate.now());
-            this.salesRepository.save(sales);
-            return true;
+                return true;
+        }
+            return false;
         }
 
         return false;
     }
 
-    private double calcularSubTotal(int id){
-        
-        double subTotal = 0;
-
-        for (orderDetail orderDetail : this.orderDetailRepository.findAll()) {
-            
-            if(orderDetail.getIdOrders().getIdOrders() == id){
-                subTotal += (orderDetail.getUnityPrice() * orderDetail.getQuantity());
-            }
-
-        }
-
-        return subTotal;
-
-    }
-
     private boolean isSalesValidate(sales sales){
 
-        if(sales.getIdOrder() != null){
+        if(sales.getSubTotal() > 0){
             return true;
         }
 

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import hn.softbytes.softbytes_backend.Models.newUserJson;
 import hn.softbytes.softbytes_backend.Models.users;
 import hn.softbytes.softbytes_backend.Services.Impl.usersServiceImpl;
 import lombok.RequiredArgsConstructor;
@@ -26,8 +27,13 @@ public class usersController {
     private usersServiceImpl usersServiceImpl;
 
     @PostMapping(value = "registrar")
-    public users registrarCliente(@RequestBody users user){
-       return this.usersServiceImpl.crearCliente(user);
+    public boolean registrarCliente(@RequestBody newUserJson newUserJson) {
+
+        if(this.usersServiceImpl.crearCliente(newUserJson)){
+            return true;
+        }
+
+       return false;
     }
 
     @PutMapping("/actualizar")

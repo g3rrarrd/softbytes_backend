@@ -1,5 +1,7 @@
 package hn.softbytes.softbytes_backend.Services;
 
+import java.util.List;
+
 import hn.softbytes.softbytes_backend.Models.orderStatus;
 import hn.softbytes.softbytes_backend.Models.orders;
 
@@ -17,7 +19,7 @@ public interface ordersService {
      * @param orders orders:Json
      * @return boolean
      */
-    public boolean crearPedido(orders orders);
+    public boolean crearPedido(int idCliente, orders orders);
 
     /*
      * Obtendra el estado del pedido buscado por la id
@@ -27,5 +29,7 @@ public interface ordersService {
     public orderStatus obtenerEstado(int id);
 
     public boolean eliminarPedido(int id);
+
+    public List<orders> obtenerPedidosCliente(int idCliente);
 
 }

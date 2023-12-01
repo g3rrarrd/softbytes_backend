@@ -62,4 +62,6 @@ public interface productsService {
      * @return List<products>
      */
     public List<products> obtenerProductosCategoria(String categoria);
+
+    public boolean actualizarProdcutoReviews(int id, String review);
 }

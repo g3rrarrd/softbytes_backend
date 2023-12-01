@@ -21,11 +21,11 @@ public class salesController {
     private salesServiceImpl salesServiceImpl;
 
     @PostMapping("/crear")
-    public String crearVenta(@RequestBody sales sales){
-        if(this.salesServiceImpl.crearVenta(sales)){
-            return "Venta Creada";
+    public boolean crearVenta(@RequestParam(name = "idPedido")int idPedido){
+        if(this.salesServiceImpl.crearVenta(idPedido)){
+            return true;
         }
-        return "No se ha podido realizar la venta";
+        return false;
     }
 
     @GetMapping("/buscar/pedido")

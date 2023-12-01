@@ -1,37 +1,32 @@
 package hn.softbytes.softbytes_backend.Services.Impl;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import hn.softbytes.softbytes_backend.Models.cities;
 import hn.softbytes.softbytes_backend.Models.countries;
 import hn.softbytes.softbytes_backend.Models.departments;
+import hn.softbytes.softbytes_backend.Repositories.citiesRepository;
 import hn.softbytes.softbytes_backend.Services.citiesService;
 
 @Service
 public class citiesServiceImpl implements citiesService{
 
-    @Override
-    public cities obtenerCiudad(int id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'obtenerCiudad'");
-    }
+    @Autowired
+    private citiesRepository citiesRepository;
 
     @Override
-    public boolean crearCiudad(cities cities) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'crearCiudad'");
+    public List<cities> obtenerCiudades() {
+        
+        if(this.citiesRepository.findAll().size() > 0){
+            return this.citiesRepository.findAll();
+        }
+
+        return null;
     }
 
-    @Override
-    public departments obtenerDepartamentoCiudad(int id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'obtenerDepartamentoCiudad'");
-    }
-
-    @Override
-    public countries obtenerPaisCiudad(int id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'obtenerPaisCiudad'");
-    }
+   
     
 }

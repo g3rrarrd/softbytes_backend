@@ -8,6 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import hn.softbytes.softbytes_backend.Models.address;
+import hn.softbytes.softbytes_backend.Models.cities;
+import hn.softbytes.softbytes_backend.Models.countries;
+import hn.softbytes.softbytes_backend.Models.departments;
+import hn.softbytes.softbytes_backend.Models.newUserJson;
 import hn.softbytes.softbytes_backend.Models.users;
 import hn.softbytes.softbytes_backend.Repositories.addressRepository;
 import hn.softbytes.softbytes_backend.Repositories.citiesRepository;
@@ -35,39 +39,70 @@ public class usersServiceImpl implements usersService{
     private countriesRepository countriesRepository;
 
     @Override
-    public users crearCliente(users users) {
+    public boolean crearCliente(newUserJson newUserJson) {
         
-        address address;
+        List<address> addressList = new LinkedList<address>();
+        address address = new address();
+        users users = newUserJson.getUser();
 
         if(isValidateUser(users)){
            if(!this.usersRepository.findAll().isEmpty()){
              for (users user : this.usersRepository.findAll()) {
                 if (user.getEmail().equals(users.getEmail())) {
-                    return users;
+                    return false;
                 }
             }
            }
-
-            this.countriesRepository.save(users.getAddresses().get(0).getIdCity().getDepartments().getIdCountry());
-            this.departmentsRepository.save(users.getAddresses().get(0).getIdCity().getDepartments());
-            this.citiesRepository.save(users.getAddresses().get(0).getIdCity());
-            address = this.addressRepository.save(users.getAddresses().get(0));
-            users.getAddresses().get(users.getIdUser()).setIdUsers(users);;
+           
+            addressList.add(address);
+            addressList.get(0).setAddress(newUserJson.getAddress());
+            addressList.get(0).setZipCode(newUserJson.getZipCode());
+            addressList.get(0).setIdCity(this.econtrarCiudad(newUserJson.getCity()));
+            addressList.get(0).getIdCity().setDepartments(this.encontrarDepatamento(newUserJson.getDepartment()));
+            addressList.get(0).getIdCity().getDepartments().setIdCountry(this.econtrarPais(newUserJson.getCountry()));
+            addressList.get(0).setIdUsers(users);
+            users.setAddresses(addressList);
             users.setUsertype(this.userTypeRepository.findById(1).get());
             users.setUsername(users.getEmail());
             this.usersRepository.save(users);
-            return this.usersRepository.findById(users.getIdUser()).get();
+            return true;
         }
 
-        return users;
+        return false;
+    }
+
+    private cities econtrarCiudad(String nameCity){
+        for (cities cities : this.citiesRepository.findAll()) {
+            if(cities.getName().equals(nameCity)){
+                return cities;
+            }
+        }
+        return null;
+    }
+
+    private departments encontrarDepatamento(String nameDepartment){
+        for (departments department : this.departmentsRepository.findAll()) {
+            if(department.getName().equals(nameDepartment)){
+                return department;
+            }
+        }
+        return null;
+    }
+
+    private countries econtrarPais(String nameCity){
+        for (countries country : this.countriesRepository.findAll()) {
+            if(country.getName().equals(nameCity)){
+                return country;
+            }
+        }
+        return null;
     }
 
     private boolean isValidateUser(users users){
-        if(users.getDateofBirth() != null 
+        if(users.getDateofBirth() != null
         && !users.getEmail().isEmpty() 
         && !users.getName().isEmpty() 
         && !users.getLastName().isEmpty()
-        && !users.getAddresses().isEmpty()
         && !users.getPassword().isEmpty()
         && !users.getTelephone().isEmpty()){
             return true;
@@ -209,5 +244,6 @@ public class usersServiceImpl implements usersService{
 
         return false;
     }
+    
     
 }

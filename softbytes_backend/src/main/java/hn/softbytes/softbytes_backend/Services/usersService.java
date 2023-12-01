@@ -3,6 +3,7 @@ package hn.softbytes.softbytes_backend.Services;
 import java.time.LocalDate;
 import java.util.List;
 
+import hn.softbytes.softbytes_backend.Models.newUserJson;
 import hn.softbytes.softbytes_backend.Models.users;
 
 public interface usersService {
@@ -13,7 +14,7 @@ public interface usersService {
      * @param users valor tipo json con los atributos del cliente
      * @return boolean, True Exito, False fracaso
      */
-    public users crearCliente(users users);
+    public boolean crearCliente(newUserJson newUserJson);
 
     /*
      * Modifica un usuario existente
