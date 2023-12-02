@@ -29,17 +29,17 @@ public class salesController {
     }
 
     @GetMapping("/buscar/pedido")
-    public sales buscarVentaPedido(@RequestParam(name = "id")int id){
-        return this.salesServiceImpl.buscarVentaPedido(id);
+    public sales buscarVentaPedido(@RequestParam(name = "idPedido")int idPedido){
+        return this.salesServiceImpl.buscarVentaPedido(idPedido);
     }
 
     @GetMapping("/buscar")
-    public sales buscarVenta(@RequestParam(name = "id")int id){
-        return this.salesServiceImpl.buscarVenta(id);
+    public sales buscarVenta(@RequestParam(name = "idVenta")int idVenta){
+        return this.salesServiceImpl.buscarVenta(idVenta);
     }
 
     @GetMapping("/obtener")
-    public List<sales> obtenerVenta(@RequestParam(name = "id")int id){
+    public List<sales> obtenerVenta(){
         return this.salesServiceImpl.obtenerVentas();
     }
 

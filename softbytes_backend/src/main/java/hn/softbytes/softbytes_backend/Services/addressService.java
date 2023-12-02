@@ -11,7 +11,7 @@ public interface addressService {
      * @param address address:Json
      * @return boolean
      */
-    public boolean crearDireccion(address address);
+    public boolean crearDireccion(int idCliente,int idCiudad, address address);
 
     /*
      * Se buscara una direccion segun su id
@@ -33,4 +33,8 @@ public interface addressService {
      * @return boolean
      */
     public boolean actualizarDireccion(int id, address address);
+
+    public boolean eliminarDireccion(int id);
+
+    public List<address> obtenerDireccionesCliente(int id);
 }
