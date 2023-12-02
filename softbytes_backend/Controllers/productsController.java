@@ -24,24 +24,24 @@ public class productsController {
     productsServiceImpl productsServiceImpl;
 
     @PostMapping("/crear")
-    public String crearProducto(@RequestParam(name = "id")int id,@RequestBody products products, @RequestParam(name = "idSubCategory")int idSubCategory, @RequestParam(name = "idCategory")int idCategory){
-        if(this.productsServiceImpl.crearProducto(id ,products, idSubCategory, idCategory)){
+    public String crearProducto(@RequestParam(name = "idProducto")int idProducto,@RequestBody products products, @RequestParam(name = "idSubCategory")int idSubCategory, @RequestParam(name = "idCategory")int idCategory){
+        if(this.productsServiceImpl.crearProducto(idProducto ,products, idSubCategory, idCategory)){
             return "Producto Creado";
         }
         return "No ha podido crearse";
     }
 
     @PutMapping("/actualizar")
-    public String actualizarPrecio(@RequestParam(name = "id")int id, @RequestParam(name = "price")double price){
-        if(this.productsServiceImpl.actualizarProductoPrecio(id, price)){
+    public String actualizarPrecio(@RequestParam(name = "idProducto")int idProducto, @RequestParam(name = "price")double price){
+        if(this.productsServiceImpl.actualizarProductoPrecio(idProducto, price)){
             return "Producto Actualizado";
         }
         return "No se ha podido actualizar";
     }
 
     @DeleteMapping("/eliminar")
-    public boolean eliminarProducto(@RequestParam(name = "id")int id){
-        return this.productsServiceImpl.eliminarProducto(id);
+    public boolean eliminarProducto(@RequestParam(name = "idProducto")int idProducto){
+        return this.productsServiceImpl.eliminarProducto(idProducto);
     }
 
     @GetMapping("/obtener")
@@ -50,8 +50,8 @@ public class productsController {
     }
 
     @GetMapping("/buscar")
-    public products buscarProductos(@RequestParam(name = "id")int id){
-        return this.productsServiceImpl.obtenerProducto(id);
+    public products buscarProductos(@RequestParam(name = "idProducto")int idProducto){
+        return this.productsServiceImpl.obtenerProducto(idProducto);
     }
 
     @GetMapping("/obtener/subCategoria")
@@ -65,7 +65,7 @@ public class productsController {
     }
 
     @PutMapping("/actualizar/review")
-    public boolean actualizarProductoReview(@RequestParam(name = "id")int id, @RequestParam(name = "review")String review){
-        return this.productsServiceImpl.actualizarProdcutoReviews(id, review);
+    public boolean actualizarProductoReview(@RequestParam(name = "idProducto")int idProducto, @RequestParam(name = "review")String review){
+        return this.productsServiceImpl.actualizarProdcutoReviews(idProducto, review);
     }
 }

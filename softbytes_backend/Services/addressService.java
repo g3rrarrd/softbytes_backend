@@ -35,4 +35,6 @@ public interface addressService {
     public boolean actualizarDireccion(int id, address address);
 
     public boolean eliminarDireccion(int id);
+
+    public List<address> obtenerDireccionesCliente(int id);
 }

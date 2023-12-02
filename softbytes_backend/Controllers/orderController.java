@@ -23,18 +23,18 @@ public class orderController {
     private ordersServiceImpl ordersServiceImpl;
 
     @GetMapping("/obtener")
-    public orders buscarOrden(@RequestParam(name = "id")int id){
-        return this.ordersServiceImpl.obtenerPedido(id);
+    public orders buscarOrden(@RequestParam(name = "idPedido")int idPedido){
+        return this.ordersServiceImpl.obtenerPedido(idPedido);
     }
 
     @GetMapping("/obtener/estado/pedido")
-    public orderStatus obtenerEstadoPedido(@RequestParam(name = "id")int id){
-        return this.ordersServiceImpl.obtenerEstado(id);
+    public orderStatus obtenerEstadoPedido(@RequestParam(name = "idPedido")int idPedido){
+        return this.ordersServiceImpl.obtenerEstado(idPedido);
     }
 
     @DeleteMapping("/eliminar")
-    public boolean eliminarPedido(@RequestParam(name = "id")int id){
-        return this.ordersServiceImpl.eliminarPedido(id);
+    public boolean eliminarPedido(@RequestParam(name = "idPedido")int idPedido){
+        return this.ordersServiceImpl.eliminarPedido(idPedido);
     }
 
     @PostMapping("/crear")

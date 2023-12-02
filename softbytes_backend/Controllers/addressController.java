@@ -46,4 +46,9 @@ public class addressController {
     public boolean eliminarDireccion(@RequestParam(name = "idDireccion")int idDireccion){
         return this.addressServiceImpl.eliminarDireccion(idDireccion);
     }
+
+    @GetMapping("/obtener/direccion/cliente")
+    public List<address> obtenerDireccionCliente(@RequestParam(name = "idCliente")int idCliente){
+        return this.addressServiceImpl.obtenerDireccionesCliente(idCliente);
+    }
 }

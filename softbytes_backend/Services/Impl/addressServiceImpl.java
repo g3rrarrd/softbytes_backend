@@ -97,5 +97,19 @@ public class addressServiceImpl implements addressService{
 
         return false;
     }
+
+    @Override
+    public List<address> obtenerDireccionesCliente(int id) {
+        
+        List<address> addresslist = new LinkedList<address>();
+
+        if(this.usersRepository.findById(id) != null){
+            
+            addresslist = this.usersRepository.findById(id).get().getAddresses();
+
+        }
+
+        return addresslist;
+    }
     
 }

@@ -45,9 +45,9 @@ public class usersController {
     }    
 
     @GetMapping("/buscar")
-    public users buscarCliente(@RequestParam(name = "id")int id){
+    public users buscarCliente(@RequestParam(name = "idCliente")int idCliente){
         users users = new users();
-        users = this.usersServiceImpl.buscarCliente(id);
+        users = this.usersServiceImpl.buscarCliente(idCliente);
         return users;
     }
 
@@ -57,8 +57,8 @@ public class usersController {
     }
 
     @DeleteMapping("/eliminar")
-    public boolean eliminarCliente(@RequestParam(name = "id")int id){
-        return this.usersServiceImpl.eliminarCliente(id);
+    public boolean eliminarCliente(@RequestParam(name = "idCliente")int idCliente){
+        return this.usersServiceImpl.eliminarCliente(idCliente);
     }
 
     @GetMapping("/obtener")
@@ -67,8 +67,8 @@ public class usersController {
     }
 
     @GetMapping("/obtener/tipo")
-    public List<users> obtenerTiposClientes(@RequestParam(name = "id")int id){
-        return this.usersServiceImpl.obtenerClientePorTipo(id);
+    public List<users> obtenerTiposClientes(@RequestParam(name = "idTipo")int idTipo){
+        return this.usersServiceImpl.obtenerClientePorTipo(idTipo);
     }
 
     @GetMapping("/obtener/fecha")
@@ -82,8 +82,8 @@ public class usersController {
     }
 
     @PutMapping("/cambiarTipo")
-    public String cambiarTipoCliente(@RequestParam(name = "id")int id, @RequestParam(name = "tipo") int tipo){
-        if(this.usersServiceImpl.cambiarTipo(id, tipo)){
+    public String cambiarTipoCliente(@RequestParam(name = "idCliente")int idCliente, @RequestParam(name = "tipo") int tipo){
+        if(this.usersServiceImpl.cambiarTipo(idCliente, tipo)){
             return "Tipo de cliente cambiado";
         }
         return "Error en el cambio";
